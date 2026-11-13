@@ -8,7 +8,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-vesutil-dev-key-chang
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['web-production-d1a43f9c.up.railway.app', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

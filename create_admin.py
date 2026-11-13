@@ -10,13 +10,15 @@ username = 'admin'
 email = 'vesutil@mail.ru'
 password = 'admin12345'
 
-if not User.objects.filter(username=username).exists():
-    User.objects.create_superuser(username=username, email=email, password=password)
+user, created = User.objects.get_or_create(username=username)
+user.email = email
+user.set_password(password)
+user.is_superuser = True
+user.is_staff = True
+user.is_active = True
+user.save()
+
+if created:
     print(f'✅ Пользователь {username} создан с паролем {password}')
 else:
-    user = User.objects.get(username=username)
-    user.set_password(password)
-    user.is_superuser = True
-    user.is_staff = True
-    user.save()
-    print(f'🔄 Пользователь {username} уже существовал. Пароль сброшен на {password}')
+    print(f'🔄 Пользователь {username} обновлен. Пароль: {password}')

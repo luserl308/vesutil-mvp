@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vesutil-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: vesutil
+      POSTGRES_USER: vesutil
+      POSTGRES_PASSWORD: vesutil_local_only
+    ports:
+      - "5432:5432"
+    volumes:
+      - vesutil_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vesutil -d vesutil"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  vesutil_postgres_data:

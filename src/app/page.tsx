@@ -58,7 +58,7 @@ export default function Home() {
           mode: offer.kind === "material" ? "materials" : "services",
           pickup: offer.pickupAvailable, icon: offer.icon, keywords: offer.keywords,
         }));
-        if (!controller.signal.aborted) setResults(mapped);
+        if (!controller.signal.aborted) setResults(mapped.sort((a, b) => sort === "pickup" ? Number(b.pickup) - Number(a.pickup) : sort === "title" ? a.title.localeCompare(b.title, "ru") : a.id.localeCompare(b.id)));
       } catch (error) {
         if (!controller.signal.aborted) setApiError(true);
       } finally {
@@ -67,7 +67,7 @@ export default function Home() {
     }
     void loadOffers();
     return () => controller.abort();
-  }, [mode, query, category, location, pickupOnly]);
+  }, [mode, query, category, location, pickupOnly, sort]);
 
   function changeMode(nextMode: Mode) {
     setMode(nextMode);
@@ -125,7 +125,7 @@ export default function Home() {
           </div>
           <label className="sort">Сортировка<select value={sort} onChange={(event) => setSort(event.target.value)}><option value="default">По умолчанию</option><option value="pickup">Сначала с вывозом</option><option value="title">По названию</option></select></label>
         </div>
-        {apiError ? <div className="empty"><h3>Не удалось загрузить каталог</h3><p>Проверьте соединение и обновите страницу.</p><button onClick={() => setQuery((value) => value)}>Повторить</button></div> : results.length ? <div className="cards">{results.map((item) => (
+        {apiError ? <div className="empty"><h3>Не удалось загрузить каталог</h3><p>Проверьте соединение и обновите страницу.</p><button onClick={() => window.location.reload()}>Повторить</button></div> : results.length ? <div className="cards">{results.map((item) => (
           <article className="card" key={item.id}>
             <div className="cardtop"><div className="emoji">{item.icon}</div><small>{item.category}</small></div>
             <h3>{item.title}</h3>

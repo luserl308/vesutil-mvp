@@ -20,7 +20,7 @@ export type CatalogOffer = {
   pickupAvailable: boolean;
   icon: string;
   keywords: string[];
-  demo: true;
+  demo: boolean;
 };
 
 export type CatalogFilters = {

@@ -52,7 +52,7 @@ try {
 
     const client = await pool.connect();
     try {
-      const migrationSql = sql.replace(/^\\s*BEGIN;\\s*/i, "").replace(/\\s*COMMIT;\\s*$/i, "");
+      const migrationSql = sql.replace(/^\s*BEGIN;\s*/i, "").replace(/\s*COMMIT;\s*$/i, "");
       await client.query("BEGIN");
       await client.query(migrationSql);
       await client.query(

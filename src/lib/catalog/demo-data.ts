@@ -1,16 +1,16 @@
 import type { CatalogCategory, CatalogOffer } from "./types";
 
 export const categories: CatalogCategory[] = [
-  { id: "metals", kind: "material", name: "Металлолом", slug: "metallolom" },
-  { id: "plastic", kind: "material", name: "Пластик", slug: "plastik" },
-  { id: "glass", kind: "material", name: "Стекло", slug: "steklo" },
+  { id: "metals", kind: "material", name: "Металлолом", slug: "metal-scrap" },
+  { id: "plastic", kind: "material", name: "Пластик", slug: "plastic" },
+  { id: "glass", kind: "material", name: "Стекло", slug: "glass" },
   { id: "paper", kind: "material", name: "Макулатура и картон", slug: "paper-cardboard" },
-  { id: "electronics", kind: "material", name: "Электронные отходы", slug: "elektronnye-othody" },
-  { id: "construction-waste", kind: "material", name: "Строительные отходы", slug: "stroitelnye-othody" },
-  { id: "transport", kind: "service", name: "Вывоз и транспортировка", slug: "vyvoz-transportirovka" },
+  { id: "electronics", kind: "material", name: "Электронные отходы", slug: "electronic-waste" },
+  { id: "construction-waste", kind: "material", name: "Строительные отходы", slug: "construction-waste" },
+  { id: "transport", kind: "service", name: "Вывоз и транспортировка", slug: "waste-transport" },
   { id: "demolition", kind: "service", name: "Демонтаж и снос", slug: "demolition" },
-  { id: "equipment", kind: "service", name: "Аренда спецтехники", slug: "arenda-spectehniki" },
-  { id: "loading", kind: "service", name: "Погрузка и разгрузка", slug: "pogruzka-razgruzka" },
+  { id: "equipment", kind: "service", name: "Аренда спецтехники", slug: "equipment-rental" },
+  { id: "loading", kind: "service", name: "Погрузка и разгрузка", slug: "loading-unloading" },
 ];
 
 export const offers: CatalogOffer[] = [

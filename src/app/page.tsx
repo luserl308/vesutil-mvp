@@ -87,7 +87,7 @@ export default function Home() {
     <main>
       <header className="top">
         <a className="logo" href="#"><b>V</b> vesutil</a>
-        <nav><a href="#how">Как это работает</a><a href="#catalog">Каталог</a><a href="#about">О платформе</a></nav>
+        <nav><a href="#how">Как это работает</a><a href="#catalog">Каталог</a><a href="#about">О платформе</a><a href="/company">Для компаний</a></nav>
         <a className="contact" href="mailto:hello@vesutil.ru">Связаться ↗</a>
       </header>
 

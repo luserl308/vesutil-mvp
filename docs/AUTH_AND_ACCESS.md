@@ -1,17 +1,19 @@
 # Vesutil authentication and company access foundation
 
-This stage adds the server-side session and authorization foundation. It deliberately does not expose password registration or trust client-supplied user/company IDs.
+This stage adds revocable server-side sessions and company authorization. It deliberately does not expose password registration or trust client-supplied user/company IDs.
 
-## Session configuration
+## Sessions
 
-Set `AUTH_SECRET` to a cryptographically random value of at least 32 characters. The session cookie is HttpOnly, SameSite=Lax, Secure in production, and expires after seven days. The cookie contains only a user ID and expiry, authenticated with HMAC-SHA256. User status is rechecked against PostgreSQL on every request.
+Migration `0004_user_sessions.sql` creates the session store. A cryptographically random opaque token is placed in an HttpOnly, SameSite=Lax cookie (Secure in production), with a seven-day expiry. PostgreSQL stores only the SHA-256 hash of the token. Every authenticated request checks that the session exists, has not expired or been revoked, and belongs to an active user.
+
+Logout revokes the current session in PostgreSQL and clears the browser cookie. A stolen token can therefore be invalidated server-side. Expired rows can be periodically cleaned up with a maintenance job; they do not grant access.
 
 `issueSessionCookie(userId)` is server-only and must only be called after a trusted identity provider has authenticated the person and the application has mapped the provider subject to `app_users`. Never expose a route that accepts an arbitrary user ID and calls this function.
 
 ## API
 
 - `GET /api/auth/me`: returns the current authenticated profile or `authenticated: false`.
-- `POST /api/auth/logout`: clears the session cookie.
+- `POST /api/auth/logout`: revokes the current session and clears the cookie.
 
 ## Company authorization
 
@@ -23,4 +25,4 @@ Use `writeAuditEvent` after successful business mutations. Migration `0003_audit
 
 ## Not yet enabled
 
-A real sign-in/sign-up flow still requires selecting and configuring a trusted OIDC identity provider (issuer, client ID, client secret, redirect URI). No password storage or home-grown password authentication is introduced in this stage. Invitation acceptance and company onboarding will be added on top of verified identity.
+A real sign-in/sign-up flow still requires a trusted identity provider or a carefully implemented local credential flow. No password storage or public registration is introduced in this stage. Email verification, password recovery, invitation acceptance and company onboarding must be implemented before public account creation is enabled.

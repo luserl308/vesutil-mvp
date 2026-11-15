@@ -4,6 +4,10 @@ import { clearSessionCookie } from "@/lib/auth/session";
 export const runtime = "nodejs";
 
 export async function POST() {
-  await clearSessionCookie();
-  return NextResponse.json({ success: true });
+  try {
+    await clearSessionCookie();
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json({ error: "Не удалось завершить сессию." }, { status: 503 });
+  }
 }

@@ -7,7 +7,9 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const user = await getCurrentUser();
-    return NextResponse.json({ authenticated: Boolean(user), user });
+    if (!user) return NextResponse.json({ authenticated: false, user: null });
+    const { sessionId: _sessionId, ...safeUser } = user;
+    return NextResponse.json({ authenticated: true, user: safeUser });
   } catch {
     return NextResponse.json({ error: "Не удалось проверить сессию." }, { status: 503 });
   }

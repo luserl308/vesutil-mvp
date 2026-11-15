@@ -6,7 +6,9 @@
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start -H 0.0.0.0",
-    "db:migrate": "node scripts/migrate.mjs"
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:seed:local-test": "node scripts/seed-local-test-data.mjs",
+    "db:cleanup:local-test": "node scripts/seed-local-test-data.mjs --cleanup"
   },
   "dependencies": {
     "next": "^15.5.9",
